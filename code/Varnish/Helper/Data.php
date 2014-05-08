@@ -108,6 +108,10 @@ class Magneto_Varnish_Helper_Data extends Mage_Core_Helper_Abstract
 	 * @return mixed
 	 */
 	protected function logAdminAction($success=true, $generalInfo=null, $additionalInfo=null, $errors=array()) {
+		if(Mage::getEdition() !== 'Enterprise') {
+			return;
+		}
+		
 		$eventCode = 'varnish_purge'; // this needs to match the code in logging.xml
 
 		if (!Mage::getSingleton('enterprise_logging/config')->isActive($eventCode, true)) {
@@ -136,5 +140,4 @@ class Magneto_Varnish_Helper_Data extends Mage_Core_Helper_Abstract
 			'error_message' => implode("\n", $errors),
 		))->save();
 	}
-
 }
